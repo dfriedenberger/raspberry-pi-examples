@@ -19,7 +19,7 @@ docker run --rm -it raspberry-pi-debian-openjdk:8-stretch bach
 https://blog.hypriot.com/getting-started-with-docker-and-windows-on-the-raspberry-pi/
 
 ## Install Test-Software on Arduino
-
+- Use File connect-arduino/serial/serial.ino
 
 ## Start
 ```
