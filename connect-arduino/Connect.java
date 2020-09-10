@@ -42,6 +42,15 @@ public class Connect extends Thread
 
             System.out.println("Current java version is: " + System.getProperty("java.version"));
 
+            File file = new File(device); 
+
+            String str = cmd+"\n";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+            writer.write(str);
+            
+            writer.close();
+
+            /*
             ProcessBuilder pb =
                     new ProcessBuilder("/bin/echo", cmd, ">" , device);
 
@@ -59,7 +68,7 @@ public class Connect extends Thread
         
             int exitValue = proc.exitValue();
             System.out.println("Exit value: " + exitValue);
-
+*/
 
         }
         catch(Exception e) {
