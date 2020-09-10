@@ -39,37 +39,11 @@ public class Connect extends Thread
 
     public void send(String cmd) {
         try {
-
-            System.out.println("Current java version is: " + System.getProperty("java.version"));
-
             File file = new File(device); 
-
             String str = cmd+"\n";
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             writer.write(str);
-            
             writer.close();
-
-            /*
-            ProcessBuilder pb =
-                    new ProcessBuilder("/bin/echo", cmd, ">" , device);
-
-            System.out.println("Command is: " + pb.command());
-        
-            Process proc = pb.start();
-        
-            InputStream in = proc.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-        
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
-            }
-        
-            int exitValue = proc.exitValue();
-            System.out.println("Exit value: " + exitValue);
-*/
-
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -81,9 +55,9 @@ public class Connect extends Thread
        connect.start();
        while(true)
        {
-          Thread.sleep(10000);
+          Thread.sleep(1000);
           connect.send("ON");
-          Thread.sleep(10000);
+          Thread.sleep(1000);
           connect.send("OFF");
        }
     }
