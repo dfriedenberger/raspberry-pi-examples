@@ -39,7 +39,28 @@ public class Connect extends Thread
 
     public void send(String cmd) {
         try {
-        /* Process p = */ Runtime.getRuntime().exec(new String[]{"echo", cmd, device });
+
+            System.out.println("Current java version is: " + System.getProperty("java.version"));
+
+            ProcessBuilder pb =
+                    new ProcessBuilder("/bin/echo", cmd, ">" , device);
+
+            System.out.println("Command is: " + pb.command());
+        
+            Process proc = pb.start();
+        
+            InputStream in = proc.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        
+            int exitValue = proc.exitValue();
+            System.out.println("Exit value: " + exitValue);
+
+
         }
         catch(Exception e) {
             e.printStackTrace();
