@@ -76,3 +76,23 @@ docker run --rm -d --device /dev/bus/usb/001/004:/dev/bus/usb/001/004 -p 8080:80
 ```
 ### Run a web browser on port 8080
 ![DockerUI](flightradar02.png)
+
+
+# Capture Audio and Video
+
+## Start
+```
+ docker run --rm -it --privileged balenalib/raspberry-pi-debian-openjdk:8-stretch bash
+```
+
+### Capture 
+```
+    install_packages streamer libav-tools alsa-utils
+    #capture audio
+    avconv -f alsa -ac 1 -i hw:2,0 -acodec libmp3lame -ab 64k -t 10 out.mp3
+    #alternativ
+    arecord -f S16_LE -d 10 -r 16000 --device="plughw:CARD=HD,DEV=0" out.wav
+    #capture avi without audio
+    streamer -c /dev/video0 -s 1240x720 -f rgb24 -t 00:00:10 -o out.avi
+```
+
