@@ -1,21 +1,27 @@
 # raspberry-pi-examples
 raspberry-pi docker examples
 
-## helpfull images
+## Install Hypriot Docker on Image 
+https://blog.hypriot.com/getting-started-with-docker-and-windows-on-the-raspberry-pi/
+
+## Helpfull docker images
 
 - Docker UI
 ```
  docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock hypriot/rpi-dockerui
 ```
 
+### Run a web browser on port 9000
+![DockerUI](docker-ui.png)
+
+
+
 - Debian with Java
 ```
-docker run --rm -it raspberry-pi-debian-openjdk:8-stretch bach
+docker run --rm -it raspberry-pi-debian-openjdk:8-stretch bash
 ```
 
 
-## Install Hypriot Docker on Image 
-https://blog.hypriot.com/getting-started-with-docker-and-windows-on-the-raspberry-pi/
 
 # Connect arduino with raspberry
 
@@ -50,25 +56,23 @@ https://blog.hypriot.com/getting-started-with-docker-and-windows-on-the-raspberr
     omxplayer -o hdmi file_example_WAV_1MG.wav
 ```
 
-# Receive ADS-B Records from airplanes
+# Flight radar - receive ADS-B Records from airplanes 
 https://mode-s.org/decode/adsb/introduction.html 
-## DVB-T Stick anschließen
+
+## Connecting the DVB-T stick
 http://detlef-meis.de/2019/06/05/welche-dvb-t-sticks-funktionieren-fuer-sdr
 
+![DockerUI](flightradar01.jpg)
+
 ## Start
-```
- lsusb
- docker run --rm -it --device /dev/bus/usb/001/004:/dev/bus/usb/001/004 -p 8080:8080 balenalib/raspberry-pi-debian-openjdk:8-stretch bash
-```
 
-```
-    install_packages rtl-sdr
-    rtl_test
-    rtl_adsb -V
-    install_packages git make librtlsdr-dev gcc pkg-config libc6-dev
-    git clone git://github.com/MalcolmRobb/dump1090.git
-    cd dump1090
-    make
-    ./dump1090 --interactive --net
-```
+### Find stick with ```lsusb```
 
+<mark>Bus 001 Device 004: ID 0ccd:00d3 TerraTec Electronic GmbH<mark>
+
+### Run docker image with mapping for usb device
+```
+docker run --rm -d --device /dev/bus/usb/001/004:/dev/bus/usb/001/004 -p 8080:8080 frittenburger/flightradar
+```
+### Run a web browser on port 8080
+![DockerUI](flightradar02.png)

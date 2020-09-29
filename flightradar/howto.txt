@@ -1,0 +1,15 @@
+
+#Test
+docker run --rm -it --device /dev/bus/usb/001/004:/dev/bus/usb/001/004 -p 8080:8080 balenalib/raspberry-pi-debian-openjdk:8-stretch bash
+install_packages rtl-sdr
+rtl_test
+rtl_adsb -V
+
+#Build Server (Dockerfile)
+install_packages git make librtlsdr-dev gcc pkg-config libc6-dev
+git clone git://github.com/MalcolmRobb/dump1090.git
+cd dump1090
+make
+./dump1090 --interactive --net
+
+
