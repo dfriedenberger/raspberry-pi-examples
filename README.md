@@ -23,7 +23,8 @@ docker run --rm -it raspberry-pi-debian-openjdk:8-stretch bash
 
 
 
-# Connect arduino with raspberry
+# Connect arduino with raspberry (serial)
+See also https://elektro.turanis.de/html/prj176/index.html#h1
 
 ## Install Test-Software on Arduino
 - Use File connect-arduino/serial/serial.ino
@@ -40,6 +41,32 @@ docker run --rm -it raspberry-pi-debian-openjdk:8-stretch bash
 > cd raspberry-pi-examples/connect-arduino
 > javac Connect.java
 > java Connect
+```
+
+# Connect arduino with raspberry (i2c)
+See also https://elektro.turanis.de/html/prj176/index.html#h3
+
+![connection](i2c_connection.jpg)
+
+## Install Test-Software on Arduino
+- Use File connect-arduino/wire/wire.ino
+
+## Connecting 
+![i2cbus](i2cbus.png)
+
+Warning: In this experimental setup we do not need a level converter or external pull-up resistors, because the RPi is the master and it already uses internal pull-up resistors in its outputs. In a productive environment, however, a level converter is recommended.
+## Start
+```
+ sudo raspi-config #Interfacing options -> activate I2C 
+ docker run --rm -it --device /dev/i2c-1:/dev/i2c-1 balenalib/raspberry-pi-node bash 
+```
+
+```
+> #install_packages i2c-tools # yet installed
+> i2cdetect -y 1
+> #send 0x01 to arduino 0x05 to switch on led / send 0x02 to switch off
+> i2ctransfer -y 1 w1@0x05 0x01
+> i2ctransfer -y 1 w1@0x05 0x02
 ```
 
 # Play Sound
